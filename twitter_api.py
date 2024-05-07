@@ -20,16 +20,16 @@ def tweetsave(myJson):
 #Insertamos los items en general, todo lo que instanciemos como un tweet se guardara como uno.
             c.execute("INSERT INTO Tweets (id, texto, usuario, fecha, retweets, favoritos) VALUES (%s, %s, %s, %s, %s, %s)",
                 (item['id'], item['texto'], item['usuario'], fecha, item['retweets'], item['favoritos']))
-            
+#Guardamos el ID que se genero al insertar el Tweet.
             tweet_id = c.lastrowid
-            
+#Recorreremos el apartado de hashtags.
             for hashtag in item['hashtags']:
-                
+#Insertaremos todos los hashtags.
                 c.execute("INSERT INTO Hashtags (hashtag) VALUES (%s)", (hashtag,))
-                
+#Guardaremos la ultima el ultimo ID que se genero al insertar el Tweet
                 hashtag_id = c.lastrowid
-                
-                c.execute("INSERT INTO TweetHashtags (tweet_id, hashtag_id) VALUES (%s, %s)", (tweet_id, hashtag_id))
+#Con las llaves que guardamos anteriormete podremos relacionarlos el tweet y el hashtag correspondiente.
+                c.execute("INSERT INTO TweetHashtags (tweet_id, hashtag_id) VALUES (%s, %s)", (tweet_id, hashtag_id))      
         conn.commit()
         conn.close()
               
